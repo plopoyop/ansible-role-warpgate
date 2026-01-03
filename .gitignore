@@ -1,0 +1,6 @@
+# direnv
+.direnv
+
+.ansible/
+
+.task
