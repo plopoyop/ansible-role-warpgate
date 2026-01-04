@@ -1,0 +1,29 @@
+---
+name: test role
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        distro:
+          - debian13
+          - debian12
+          - rockylinux9
+          - rockylinux10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: cachix/install-nix-action@v31
+      - uses: cachix/cachix-action@v16
+        with:
+          name: devenv
+      - name: Install devbox
+        uses: jetify-com/devbox-install-action@v0.14.0
+      - name: Run molecule test
+        run: devbox run -- task test
