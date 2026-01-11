@@ -3,7 +3,7 @@
   "packages": [
     "ansible-doctor@8.0.1",
     "ansible-lint@25.8.2",
-    "git@2.51.2",
+    "git@2.52.0",
     "glibcLocales@2.40-66",
     "go-task@3.45.5",
     "podman@5.7.0",
