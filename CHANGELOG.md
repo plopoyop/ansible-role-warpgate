@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.2](https://github.com/plopoyop/ansible-role-warpgate/tree/0.1.2) (2026-01-11)
+
+[Full Changelog](https://github.com/plopoyop/ansible-role-warpgate/compare/0.1.1...0.1.2)
+
+## ⚙️ Dependencies
+
+- fix\(ci\): update renovatebot/github-action action \(v44.2.2 → v44.2.3\) [\#6](https://github.com/plopoyop/ansible-role-warpgate/pull/6) ([plopoyop](https://github.com/plopoyop))
+
 ## [0.1.1](https://github.com/plopoyop/ansible-role-warpgate/tree/0.1.1) (2026-01-07)
 
 [Full Changelog](https://github.com/plopoyop/ansible-role-warpgate/compare/0.1.0...0.1.1)
