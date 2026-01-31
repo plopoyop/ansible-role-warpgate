@@ -1,11 +1,11 @@
-# Config generated in version v0.19.0-modified
+# Config generated in version v0.20.0-modified
 # yaml-language-server: $schema=https://raw.githubusercontent.com/warp-tech/warpgate/refs/heads/main/config-schema.json
 
 sso_providers: {{ warpgate_sso_providers }}
 recordings:
   enable: {{ warpgate_record_sessions | string | ansible.builtin.lower  }}
   path: {{ warpgate_data_path }}/recordings
-external_host: null
+external_host: localhost
 database_url: sqlite:{{ warpgate_data_path }}/warpgate.db
 ssh:
   enable: {{ warpgate_ssh_enabled | string | ansible.builtin.lower }}
