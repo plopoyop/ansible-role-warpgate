@@ -16,6 +16,7 @@
 
 **Merged pull requests:**
 
+- feat\(deps\): update ansible-doctor \(8.1.1 → 8.2.0\) [\#14](https://github.com/plopoyop/ansible-role-warpgate/pull/14) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update git \(2.51.2 → 2.52.0\) [\#8](https://github.com/plopoyop/ansible-role-warpgate/pull/8) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update ansible-doctor \(8.0.1 → 8.1.1\) [\#7](https://github.com/plopoyop/ansible-role-warpgate/pull/7) ([plopoyop](https://github.com/plopoyop))
 
