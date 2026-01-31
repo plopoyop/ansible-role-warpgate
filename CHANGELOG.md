@@ -8,6 +8,7 @@
 
 - feat\(deps\): update warp-tech/warpgate \(v0.19.1 → v0.20.0\) [\#15](https://github.com/plopoyop/ansible-role-warpgate/pull/15) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v44.2.4 → v44.2.6\) [\#13](https://github.com/plopoyop/ansible-role-warpgate/pull/13) ([plopoyop](https://github.com/plopoyop))
+- fix\(deps\): update pre-commit hook ansible/ansible-lint \(v26.1.0 → v26.1.1\) [\#11](https://github.com/plopoyop/ansible-role-warpgate/pull/11) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v44.2.3 → v44.2.4\) [\#10](https://github.com/plopoyop/ansible-role-warpgate/pull/10) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\)!: Update pre-commit hook ansible/ansible-lint \(v25.12.2 → v26.1.0\) [\#9](https://github.com/plopoyop/ansible-role-warpgate/pull/9) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v44.2.2 → v44.2.3\) [\#6](https://github.com/plopoyop/ansible-role-warpgate/pull/6) ([plopoyop](https://github.com/plopoyop))
