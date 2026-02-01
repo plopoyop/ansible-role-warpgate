@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.3](https://github.com/plopoyop/ansible-role-warpgate/tree/0.1.3) (2026-02-01)
+
+[Full Changelog](https://github.com/plopoyop/ansible-role-warpgate/compare/0.1.2...0.1.3)
+
+**Merged pull requests:**
+
+- Update config template to 0.20.0 [\#17](https://github.com/plopoyop/ansible-role-warpgate/pull/17) ([plopoyop](https://github.com/plopoyop))
+
 ## [0.1.2](https://github.com/plopoyop/ansible-role-warpgate/tree/0.1.2) (2026-01-31)
 
 [Full Changelog](https://github.com/plopoyop/ansible-role-warpgate/compare/0.1.1...0.1.2)
