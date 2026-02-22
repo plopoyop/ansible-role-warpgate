@@ -14,6 +14,7 @@
 **Merged pull requests:**
 
 - feat\(deps\): update podman \(5.7.0 → 5.8.0\) [\#23](https://github.com/plopoyop/ansible-role-warpgate/pull/23) ([plopoyop](https://github.com/plopoyop))
+- feat\(deps\): update go-task \(3.45.5 → 3.48.0\) [\#21](https://github.com/plopoyop/ansible-role-warpgate/pull/21) ([plopoyop](https://github.com/plopoyop))
 - Update config template to 0.20.0 [\#17](https://github.com/plopoyop/ansible-role-warpgate/pull/17) ([plopoyop](https://github.com/plopoyop))
 
 ## [0.1.2](https://github.com/plopoyop/ansible-role-warpgate/tree/0.1.2) (2026-01-31)
