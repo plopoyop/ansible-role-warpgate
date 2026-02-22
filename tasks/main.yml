@@ -5,5 +5,8 @@
 - name: "Import install tasks"
   ansible.builtin.import_tasks: "install.yml"
 
+- name: "Import setup tasks"
+  ansible.builtin.import_tasks: "setup.yml"
+
 - name: "Import configure tasks"
   ansible.builtin.import_tasks: "configure.yml"

@@ -7,6 +7,10 @@ Install & configure warpgate
 - [Requirements](#requirements)
 - [Default Variables](#default-variables)
   - [warpgate_admin_password](#warpgate_admin_password)
+  - [warpgate_admin_username](#warpgate_admin_username)
+  - [warpgate_api_host](#warpgate_api_host)
+  - [warpgate_api_insecure](#warpgate_api_insecure)
+  - [warpgate_api_token](#warpgate_api_token)
   - [warpgate_config_file_directory](#warpgate_config_file_directory)
   - [warpgate_config_file_path](#warpgate_config_file_path)
   - [warpgate_data_path](#warpgate_data_path)
@@ -21,6 +25,7 @@ Install & configure warpgate
   - [warpgate_postgres_enabled](#warpgate_postgres_enabled)
   - [warpgate_postgres_port](#warpgate_postgres_port)
   - [warpgate_record_sessions](#warpgate_record_sessions)
+  - [warpgate_roles](#warpgate_roles)
   - [warpgate_service_enabled](#warpgate_service_enabled)
   - [warpgate_service_file_path](#warpgate_service_file_path)
   - [warpgate_service_name](#warpgate_service_name)
@@ -30,6 +35,9 @@ Install & configure warpgate
   - [warpgate_sso_providers](#warpgate_sso_providers)
   - [warpgate_system_group](#warpgate_system_group)
   - [warpgate_system_user](#warpgate_system_user)
+  - [warpgate_target_groups](#warpgate_target_groups)
+  - [warpgate_targets](#warpgate_targets)
+  - [warpgate_users](#warpgate_users)
   - [warpgate_version](#warpgate_version)
 - [Dependencies](#dependencies)
 - [License](#license)
@@ -46,6 +54,49 @@ Install & configure warpgate
 ### warpgate_admin_password
 
 Warpgate admin password
+
+**_Type:_** string<br />
+
+### warpgate_admin_username
+
+Warpgate admin username (for automatic API token via POST session)
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+warpgate_admin_username: admin
+```
+
+### warpgate_api_host
+
+Warpgate API host
+
+**_Type:_** string<br />
+
+#### Example usage
+
+```YAML
+warpgate_api_host: "https://localhost:8888/@warpgate/admin/api/"
+```
+
+### warpgate_api_insecure
+
+Warpgate API insecure
+
+**_Type:_** boolean<br />
+
+#### Default value
+
+```YAML
+warpgate_api_insecure: false
+```
+
+### warpgate_api_token
+
+Warpgate API token. If unset, the role will try to obtain one via user API
+(POST /auth/login then POST /profile/api-tokens). You can also set it manually (Admin UI).
 
 **_Type:_** string<br />
 
@@ -98,8 +149,8 @@ warpgate_database_url: sqlite:{{ warpgate_data_path }}/warpgate.db
 #### Default value
 
 ```YAML
-warpgate_download_url:
-  https://github.com/warp-tech/warpgate/releases/download/v{{ warpgate_version
+warpgate_download_url: 
+  https://github.com/warp-tech/warpgate/releases/download/v{{ warpgate_version 
   }}/warpgate-v{{ warpgate_version }}-x86_64-linux
 ```
 
@@ -203,6 +254,24 @@ Warpgate record sessions
 warpgate_record_sessions: true
 ```
 
+### warpgate_roles
+
+Warpgate roles
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+warpgate_roles: []
+```
+
+#### Example usage
+
+```YAML
+
+```
+
 ### warpgate_service_enabled
 
 Enable warpgate service
@@ -220,7 +289,7 @@ warpgate_service_enabled: true
 #### Default value
 
 ```YAML
-warpgate_service_file_path: /etc/systemd/system/{{ warpgate_service_name
+warpgate_service_file_path: /etc/systemd/system/{{ warpgate_service_name 
   }}.service
 ```
 
@@ -302,6 +371,60 @@ System user name to create
 
 ```YAML
 warpgate_system_user: warpgate
+```
+
+### warpgate_target_groups
+
+Warpgate target groups
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+warpgate_target_groups: []
+```
+
+#### Example usage
+
+```YAML
+
+```
+
+### warpgate_targets
+
+Warpgate targets
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+warpgate_targets: []
+```
+
+#### Example usage
+
+```YAML
+
+```
+
+### warpgate_users
+
+Warpgate users
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+warpgate_users: []
+```
+
+#### Example usage
+
+```YAML
+
 ```
 
 ### warpgate_version
