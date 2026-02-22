@@ -8,6 +8,7 @@
 
 - feat\(ci\): update renovatebot/github-action action \(v46.0.2 → v46.1.1\) [\#22](https://github.com/plopoyop/ansible-role-warpgate/pull/22) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v46.0.1 → v46.0.2\) [\#20](https://github.com/plopoyop/ansible-role-warpgate/pull/20) ([plopoyop](https://github.com/plopoyop))
+- fix\(deps\): update warp-tech/warpgate \(v0.20.0 → v0.20.2\) [\#19](https://github.com/plopoyop/ansible-role-warpgate/pull/19) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v46.0.0 → v46.0.1\) [\#18](https://github.com/plopoyop/ansible-role-warpgate/pull/18) ([plopoyop](https://github.com/plopoyop))
 
 **Merged pull requests:**
