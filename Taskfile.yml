@@ -43,6 +43,11 @@ tasks:
     cmds:
       - molecule test --all
 
+  test:modules:
+    desc: "Run pytest for ansible modules"
+    cmds:
+      - pytest
+
   gen-doc:
     desc: "Generate readme"
     cmds:
