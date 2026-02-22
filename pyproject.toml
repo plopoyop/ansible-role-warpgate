@@ -1,0 +1,14 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["module_utils", "library"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.ruff.lint.per-file-ignores]
+# Ansible modules: imports after DOCUMENTATION/EXAMPLES/RETURN docstrings,
+# and import grouping follows Ansible conventions
+"library/*.py" = ["E402", "I001"]
