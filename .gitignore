@@ -4,3 +4,6 @@
 .ansible/
 
 .task
+
+__pycache__/
+.ruff_cache/
