@@ -11,6 +11,8 @@
     "python313Packages.ansible@13.1.0",
     "python313Packages.molecule@25.12.0",
     "python313Packages.molecule-plugins@23.5.3",
+    "python313Packages.pytest-ansible@25.12.0",
+    "python313Packages.ruff@0.15.0",
     "yamllint@1.37.1"
   ]
 }
