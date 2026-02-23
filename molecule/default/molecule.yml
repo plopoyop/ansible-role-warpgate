@@ -17,3 +17,7 @@ provisioner:
     D: true
 verifier:
   name: ansible
+
+ansible:
+  playbooks:
+    verify: ../common/verify.yml
