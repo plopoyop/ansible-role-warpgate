@@ -3,7 +3,7 @@
   hosts: all
   gather_facts: false
   vars_files:
-    - "../resources/install.yml"
+    - "../vars/install.yml"
   tasks:
     - name: "Import role"
       ansible.builtin.import_role:
