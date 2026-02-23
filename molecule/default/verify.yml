@@ -1,18 +1,20 @@
 ---
 - name: Verify
   hosts: all
+  vars_files:
+    - "../vars/install.yml"
   tasks:
     - name: "Check group has been created"
       ansible.builtin.group:
-        name: "warpgateg"
+        name: "{{ warpgate_system_group }}"
         state: "present"
       check_mode: true
       register: "warpgate_group_check"
 
     - name: "Check user has been created"
       ansible.builtin.user:
-        name: "warpgateu"
-        group: "warpgateg"
+        name: "{{ warpgate_system_user }}"
+        group: "{{ warpgate_system_group }}"
         create_home: false
         system: true
       check_mode: true
