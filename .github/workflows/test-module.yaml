@@ -1,5 +1,5 @@
 ---
-name: test role
+name: test module
 on:
   workflow_dispatch:
   push:
