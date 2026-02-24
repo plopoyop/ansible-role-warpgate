@@ -33,6 +33,8 @@ tasks:
     cmds:
       - yamllint .
       - ansible-lint
+      - ruff check library/ tests/ module_utils/
+
 
   test:
     desc: "Run molecule tests"
@@ -40,6 +42,11 @@ tasks:
       - prepare
     cmds:
       - molecule test --all
+
+  test:modules:
+    desc: "Run pytest for ansible modules"
+    cmds:
+      - pytest
 
   gen-doc:
     desc: "Generate readme"

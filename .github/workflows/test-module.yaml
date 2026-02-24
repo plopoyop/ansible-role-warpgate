@@ -1,5 +1,5 @@
 ---
-name: test role
+name: test module
 on:
   workflow_dispatch:
   push:
@@ -10,16 +10,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-24.04
-    strategy:
-      matrix:
-        distro:
-          - debian13
-          - debian12
-          - rockylinux9
-          - rockylinux10
     steps:
       - uses: actions/checkout@v6
       - name: Install devbox
         uses: jetify-com/devbox-install-action@v0.14.0
       - name: Run molecule test
-        run: devbox run -- task test
+        run: devbox run -- task test:modules
