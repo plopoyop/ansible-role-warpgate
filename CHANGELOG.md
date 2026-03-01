@@ -16,6 +16,7 @@
 **Merged pull requests:**
 
 - feat\(deps\): update python313packages.ansible \(13.1.0 → 13.3.0\) [\#28](https://github.com/plopoyop/ansible-role-warpgate/pull/28) ([plopoyop](https://github.com/plopoyop))
+- feat\(deps\): update git \(2.52.0 → 2.53.0\) [\#26](https://github.com/plopoyop/ansible-role-warpgate/pull/26) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update podman \(5.7.0 → 5.8.0\) [\#23](https://github.com/plopoyop/ansible-role-warpgate/pull/23) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update go-task \(3.45.5 → 3.48.0\) [\#21](https://github.com/plopoyop/ansible-role-warpgate/pull/21) ([plopoyop](https://github.com/plopoyop))
 - Update config template to 0.20.0 [\#17](https://github.com/plopoyop/ansible-role-warpgate/pull/17) ([plopoyop](https://github.com/plopoyop))
