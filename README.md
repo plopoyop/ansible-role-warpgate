@@ -313,7 +313,7 @@ warpgate version to install
 #### Default value
 
 ```YAML
-warpgate_version: 0.20.2
+warpgate_version: 0.21.1
 ```
 
 ## Dependencies
