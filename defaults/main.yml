@@ -16,7 +16,7 @@ warpgate_system_group: "warpgate"
 # @var warpgate_version:type: string
 # @var warpgate_version:description: >
 # warpgate version to install
-warpgate_version: 0.20.2
+warpgate_version: 0.21.1
 
 # @var warpgate_service_state
 # @var warpgate_service_state:type: string
@@ -108,6 +108,17 @@ warpgate_record_sessions: true
 # Warpgate external host
 warpgate_external_host: "localhost"
 
+# @var warpgate_kubernetes_enabled
+# @var warpgate_kubernetes_enabled:type: boolean
+# @var warpgate_kubernetes_enabled:description: >
+# Warpgate Kubernetes enabled
+warpgate_kubernetes_enabled: false
+
+# @var warpgate_kubernetes_port
+# @var warpgate_kubernetes_port:type: int
+# @var warpgate_kubernetes_port:description: >
+# Warpgate Kubernetes port
+warpgate_kubernetes_port: 8443
 
 # @var warpgate_sso_providers
 # @var warpgate_sso_providers:type: list
