@@ -16,6 +16,8 @@ Install & configure warpgate
   - [warpgate_external_host](#warpgate_external_host)
   - [warpgate_http_port](#warpgate_http_port)
   - [warpgate_install_path](#warpgate_install_path)
+  - [warpgate_kubernetes_enabled](#warpgate_kubernetes_enabled)
+  - [warpgate_kubernetes_port](#warpgate_kubernetes_port)
   - [warpgate_mysql_enabled](#warpgate_mysql_enabled)
   - [warpgate_mysql_port](#warpgate_mysql_port)
   - [warpgate_postgres_enabled](#warpgate_postgres_enabled)
@@ -98,8 +100,8 @@ warpgate_database_url: sqlite:{{ warpgate_data_path }}/warpgate.db
 #### Default value
 
 ```YAML
-warpgate_download_url:
-  https://github.com/warp-tech/warpgate/releases/download/v{{ warpgate_version
+warpgate_download_url: 
+  https://github.com/warp-tech/warpgate/releases/download/v{{ warpgate_version 
   }}/warpgate-v{{ warpgate_version }}-x86_64-linux
 ```
 
@@ -141,6 +143,30 @@ warpgate_http_port: 8888
 
 ```YAML
 warpgate_install_path: /usr/bin
+```
+
+### warpgate_kubernetes_enabled
+
+Warpgate Kubernetes enabled
+
+**_Type:_** boolean<br />
+
+#### Default value
+
+```YAML
+warpgate_kubernetes_enabled: false
+```
+
+### warpgate_kubernetes_port
+
+Warpgate Kubernetes port
+
+**_Type:_** int<br />
+
+#### Default value
+
+```YAML
+warpgate_kubernetes_port: 8443
 ```
 
 ### warpgate_mysql_enabled
@@ -220,7 +246,7 @@ warpgate_service_enabled: true
 #### Default value
 
 ```YAML
-warpgate_service_file_path: /etc/systemd/system/{{ warpgate_service_name
+warpgate_service_file_path: /etc/systemd/system/{{ warpgate_service_name 
   }}.service
 ```
 

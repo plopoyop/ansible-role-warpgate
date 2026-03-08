@@ -108,6 +108,17 @@ warpgate_record_sessions: true
 # Warpgate external host
 warpgate_external_host: "localhost"
 
+# @var warpgate_kubernetes_enabled
+# @var warpgate_kubernetes_enabled:type: boolean
+# @var warpgate_kubernetes_enabled:description: >
+# Warpgate Kubernetes enabled
+warpgate_kubernetes_enabled: false
+
+# @var warpgate_kubernetes_port
+# @var warpgate_kubernetes_port:type: int
+# @var warpgate_kubernetes_port:description: >
+# Warpgate Kubernetes port
+warpgate_kubernetes_port: 8443
 
 # @var warpgate_sso_providers
 # @var warpgate_sso_providers:type: list
