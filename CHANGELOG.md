@@ -16,6 +16,7 @@
 
 **Merged pull requests:**
 
+- fix\(deps\): update ansible-doctor \(8.2.0 → 8.2.1\) [\#30](https://github.com/plopoyop/ansible-role-warpgate/pull/30) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update python313packages.ansible \(13.1.0 → 13.3.0\) [\#28](https://github.com/plopoyop/ansible-role-warpgate/pull/28) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update git \(2.52.0 → 2.53.0\) [\#26](https://github.com/plopoyop/ansible-role-warpgate/pull/26) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update podman \(5.7.0 → 5.8.0\) [\#23](https://github.com/plopoyop/ansible-role-warpgate/pull/23) ([plopoyop](https://github.com/plopoyop))
