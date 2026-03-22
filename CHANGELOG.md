@@ -1,11 +1,12 @@
 # Changelog
 
-## [0.1.3](https://github.com/plopoyop/ansible-role-warpgate/tree/0.1.3) (2026-03-15)
+## [0.1.3](https://github.com/plopoyop/ansible-role-warpgate/tree/0.1.3) (2026-03-22)
 
 [Full Changelog](https://github.com/plopoyop/ansible-role-warpgate/compare/0.1.2...0.1.3)
 
 ## ⚙️ Dependencies
 
+- fix\(ci\): update renovatebot/github-action action \(v46.1.4 → v46.1.5\) [\#34](https://github.com/plopoyop/ansible-role-warpgate/pull/34) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v46.1.3 → v46.1.4\) [\#33](https://github.com/plopoyop/ansible-role-warpgate/pull/33) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update warp-tech/warpgate \(v0.20.2 → v0.21.1\) [\#32](https://github.com/plopoyop/ansible-role-warpgate/pull/32) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update pre-commit hook ansible/ansible-lint \(v26.2.0 → v26.3.0\) [\#31](https://github.com/plopoyop/ansible-role-warpgate/pull/31) ([plopoyop](https://github.com/plopoyop))
