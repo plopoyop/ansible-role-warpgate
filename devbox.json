@@ -6,7 +6,7 @@
     "git@2.53.0",
     "glibcLocales@2.40-66",
     "go-task@3.48.0",
-    "podman@5.8.0",
+    "podman@5.8.1",
     "pre-commit@4.5.1",
     "python313Packages.ansible@13.3.0",
     "python313Packages.molecule@25.12.0",
