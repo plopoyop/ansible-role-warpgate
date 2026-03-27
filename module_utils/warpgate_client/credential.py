@@ -1,7 +1,7 @@
 """
 Credential management for the Warpgate API
 
-This module provides functions to manage user credentials (password, public key, SSO).
+This module provides functions to manage user credentials (password, public key, SSO, certificate).
 """
 
 from typing import Any, Dict, List
@@ -254,3 +254,115 @@ def delete_sso_credential(client, user_id: str, credential_id: str) -> None:
         credential_id: Credential ID to delete
     """
     client._request("DELETE", f"/users/{user_id}/credentials/sso/{credential_id}")
+
+
+class CertificateCredential:
+    """Represents a certificate credential for a user (used for Kubernetes mTLS)"""
+    def __init__(self, id: str = "", label: str = "", date_added: str = "",
+                 last_used: str = "", fingerprint: str = ""):
+        self.id = id
+        self.label = label
+        self.date_added = date_added
+        self.last_used = last_used
+        self.fingerprint = fingerprint
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> 'CertificateCredential':
+        """Create a CertificateCredential from a dictionary"""
+        return cls(
+            id=data.get('id', ''),
+            label=data.get('label', ''),
+            date_added=data.get('date_added', ''),
+            last_used=data.get('last_used', ''),
+            fingerprint=data.get('fingerprint', '')
+        )
+
+
+class IssuedCertificateCredential:
+    """Represents a newly issued certificate credential (returned by the issue endpoint)"""
+    def __init__(self, credential: CertificateCredential = None, certificate_pem: str = ""):
+        self.credential = credential or CertificateCredential()
+        self.certificate_pem = certificate_pem
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> 'IssuedCertificateCredential':
+        """Create an IssuedCertificateCredential from a dictionary"""
+        cred_data = data.get('credential', {})
+        return cls(
+            credential=CertificateCredential.from_dict(cred_data),
+            certificate_pem=data.get('certificate_pem', '')
+        )
+
+
+def get_certificate_credentials(client, user_id: str) -> List[CertificateCredential]:
+    """
+    Retrieves all certificate credentials for a user.
+
+    Args:
+        client: WarpgateClient instance
+        user_id: User ID
+
+    Returns:
+        List of CertificateCredential objects
+    """
+    try:
+        response = client._request("GET", f"/users/{user_id}/credentials/certificates")
+        return [CertificateCredential.from_dict(cred) for cred in response]
+    except WarpgateAPIError as e:
+        if e.status_code == 404:
+            return []
+        raise
+
+
+def issue_certificate_credential(client, user_id: str, label: str,
+                                  public_key_pem: str) -> IssuedCertificateCredential:
+    """
+    Issues a new certificate credential for a user. The server signs the provided
+    public key using Warpgate's built-in CA.
+
+    Args:
+        client: WarpgateClient instance
+        user_id: User ID
+        label: Label for the certificate
+        public_key_pem: PEM-encoded public key to be signed
+
+    Returns:
+        IssuedCertificateCredential with the credential metadata and signed certificate PEM
+    """
+    body = {
+        "label": label,
+        "public_key_pem": public_key_pem
+    }
+    response = client._request("POST", f"/users/{user_id}/credentials/certificates", body)
+    return IssuedCertificateCredential.from_dict(response)
+
+
+def update_certificate_credential(client, user_id: str, credential_id: str,
+                                    label: str) -> CertificateCredential:
+    """
+    Updates an existing certificate credential (label only).
+
+    Args:
+        client: WarpgateClient instance
+        user_id: User ID
+        credential_id: Credential ID to update
+        label: Updated label
+
+    Returns:
+        Updated CertificateCredential object
+    """
+    body = {"label": label}
+    response = client._request("PATCH", f"/users/{user_id}/credentials/certificates/{credential_id}", body)
+    return CertificateCredential.from_dict(response)
+
+
+def delete_certificate_credential(client, user_id: str, credential_id: str) -> None:
+    """
+    Revokes and deletes a certificate credential from a user.
+
+    Args:
+        client: WarpgateClient instance
+        user_id: User ID
+        credential_id: Credential ID to revoke
+    """
+    client._request("DELETE", f"/users/{user_id}/credentials/certificates/{credential_id}")

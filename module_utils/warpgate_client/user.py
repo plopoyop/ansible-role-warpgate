@@ -15,16 +15,19 @@ CREDENTIAL_KIND_PUBLIC_KEY = "PublicKey"
 CREDENTIAL_KIND_TOTP = "Totp"
 CREDENTIAL_KIND_SSO = "Sso"
 CREDENTIAL_KIND_WEB_USER_APPROVAL = "WebUserApproval"
+CREDENTIAL_KIND_CERTIFICATE = "Certificate"
 
 
 class UserRequireCredentialsPolicy:
     """Defines the credential policy for a user"""
     def __init__(self, http: Optional[List[str]] = None, ssh: Optional[List[str]] = None,
-                 mysql: Optional[List[str]] = None, postgres: Optional[List[str]] = None):
+                 mysql: Optional[List[str]] = None, postgres: Optional[List[str]] = None,
+                 kubernetes: Optional[List[str]] = None):
         self.http = http
         self.ssh = ssh
         self.mysql = mysql
         self.postgres = postgres
+        self.kubernetes = kubernetes
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization. Returns empty dict if no policies set."""
@@ -37,6 +40,8 @@ class UserRequireCredentialsPolicy:
             result['mysql'] = self.mysql
         if self.postgres:
             result['postgres'] = self.postgres
+        if self.kubernetes:
+            result['kubernetes'] = self.kubernetes
         return result
 
 
@@ -59,7 +64,8 @@ class User:
                 http=cp.get('http'),
                 ssh=cp.get('ssh'),
                 mysql=cp.get('mysql'),
-                postgres=cp.get('postgres')
+                postgres=cp.get('postgres'),
+                kubernetes=cp.get('kubernetes')
             )
         return cls(
             id=data['id'],

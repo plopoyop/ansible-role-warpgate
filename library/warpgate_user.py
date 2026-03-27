@@ -89,6 +89,12 @@ options:
                 type: list
                 elements: str
                 choices: ["Password", "Totp", "Sso", "WebUserApproval"]
+            kubernetes:
+                description:
+                    - Accepted credential types for Kubernetes
+                type: list
+                elements: str
+                choices: ["Password", "PublicKey", "Certificate", "Totp", "Sso", "WebUserApproval"]
     password_credentials:
         description:
             - List of password credentials to manage for the user
@@ -253,6 +259,7 @@ def normalize_credential_policy(policy):
         ssh=policy.get('ssh') or None,
         mysql=policy.get('mysql') or None,
         postgres=policy.get('postgres') or None,
+        kubernetes=policy.get('kubernetes') or None,
     )
     if not cp.to_dict():
         return None

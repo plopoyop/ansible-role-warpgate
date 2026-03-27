@@ -1,6 +1,9 @@
 """Tests for model classes: from_dict / to_dict round-trips and edge cases."""
 
-from warpgate_client.credential import PasswordCredential, PublicKeyCredential, SsoCredential
+from warpgate_client.credential import (
+    PasswordCredential, PublicKeyCredential, SsoCredential,
+    CertificateCredential, IssuedCertificateCredential
+)
 from warpgate_client.role import Role
 from warpgate_client.target import TLS, Target
 from warpgate_client.target_group import TargetGroup
@@ -33,6 +36,21 @@ class TestCredentialPolicy:
         p = UserRequireCredentialsPolicy(http=None, ssh=["Totp"])
         assert p.to_dict() == {"ssh": ["Totp"]}
 
+    def test_to_dict_with_kubernetes(self):
+        p = UserRequireCredentialsPolicy(kubernetes=["Certificate", "Password"])
+        assert p.to_dict() == {"kubernetes": ["Certificate", "Password"]}
+
+    def test_to_dict_all_protocols(self):
+        p = UserRequireCredentialsPolicy(
+            http=["Password"], ssh=["PublicKey"], mysql=["Password"],
+            postgres=["Password"], kubernetes=["Certificate"]
+        )
+        d = p.to_dict()
+        assert d == {
+            "http": ["Password"], "ssh": ["PublicKey"], "mysql": ["Password"],
+            "postgres": ["Password"], "kubernetes": ["Certificate"]
+        }
+
 
 # ---------------------------------------------------------------------------
 # User
@@ -58,6 +76,18 @@ class TestUser:
         assert u.credential_policy.http == ["Password"]
         assert u.credential_policy.ssh == ["PublicKey"]
         assert u.credential_policy.mysql is None
+        assert u.credential_policy.kubernetes is None
+
+    def test_from_dict_with_kubernetes_policy(self):
+        data = {
+            "id": "u1",
+            "username": "alice",
+            "credential_policy": {"kubernetes": ["Certificate"]},
+        }
+        u = User.from_dict(data)
+        assert u.credential_policy is not None
+        assert u.credential_policy.kubernetes == ["Certificate"]
+        assert u.credential_policy.http is None
 
     def test_from_dict_null_policy(self):
         u = User.from_dict({"id": "u1", "username": "alice", "credential_policy": None})
@@ -123,6 +153,48 @@ class TestSsoCredential:
         c = SsoCredential.from_dict({"id": "s1", "provider": "google", "email": "a@b.com"})
         assert c.provider == "google"
         assert c.email == "a@b.com"
+
+
+class TestCertificateCredential:
+    def test_from_dict(self):
+        c = CertificateCredential.from_dict({
+            "id": "cert1",
+            "label": "laptop-cert",
+            "date_added": "2026-01-15T10:00:00Z",
+            "last_used": "2026-01-16T12:00:00Z",
+            "fingerprint": "SHA256:abc123",
+        })
+        assert c.id == "cert1"
+        assert c.label == "laptop-cert"
+        assert c.fingerprint == "SHA256:abc123"
+        assert c.date_added == "2026-01-15T10:00:00Z"
+        assert c.last_used == "2026-01-16T12:00:00Z"
+
+    def test_from_dict_defaults(self):
+        c = CertificateCredential.from_dict({})
+        assert c.id == ""
+        assert c.label == ""
+        assert c.fingerprint == ""
+
+
+class TestIssuedCertificateCredential:
+    def test_from_dict(self):
+        ic = IssuedCertificateCredential.from_dict({
+            "credential": {
+                "id": "cert1",
+                "label": "my-cert",
+                "fingerprint": "SHA256:xyz",
+            },
+            "certificate_pem": "-----BEGIN CERTIFICATE-----\nABC\n-----END CERTIFICATE-----",
+        })
+        assert ic.credential.id == "cert1"
+        assert ic.credential.label == "my-cert"
+        assert ic.certificate_pem.startswith("-----BEGIN CERTIFICATE-----")
+
+    def test_from_dict_defaults(self):
+        ic = IssuedCertificateCredential.from_dict({})
+        assert ic.credential.id == ""
+        assert ic.certificate_pem == ""
 
 
 # ---------------------------------------------------------------------------

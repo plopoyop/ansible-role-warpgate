@@ -14,11 +14,11 @@ DOCUMENTATION = '''
 ---
 module: warpgate_target
 
-short_description: Manages Warpgate targets (SSH, HTTP, MySQL, PostgreSQL)
+short_description: Manages Warpgate targets (SSH, HTTP, MySQL, PostgreSQL, Kubernetes)
 
 description:
     - This module allows to create, modify and delete targets in Warpgate.
-    - Supports SSH, HTTP, MySQL and PostgreSQL target types.
+    - Supports SSH, HTTP, MySQL, PostgreSQL and Kubernetes target types.
 
 version_added: "1.0.0"
 
@@ -200,6 +200,50 @@ options:
                         description: Verify TLS certificates
                         type: bool
                         required: true
+    kubernetes_options:
+        description:
+            - Options for a Kubernetes target (experimental, requires Warpgate >= 0.21.0)
+        type: dict
+        required: false
+        suboptions:
+            cluster_url:
+                description: URL of the upstream Kubernetes API server
+                type: str
+                required: true
+            tls:
+                description: TLS configuration for the upstream connection
+                type: dict
+                required: true
+                suboptions:
+                    mode:
+                        description: TLS mode (Disabled, Preferred, Required)
+                        type: str
+                        choices: ["Disabled", "Preferred", "Required"]
+                        required: true
+                    verify:
+                        description: Verify upstream TLS certificates
+                        type: bool
+                        required: true
+            token_auth:
+                description: Token-based authentication to the upstream K8s cluster (mutually exclusive with certificate_auth)
+                type: dict
+                suboptions:
+                    token:
+                        description: Bearer token for K8s API authentication
+                        type: str
+                        required: true
+            certificate_auth:
+                description: Certificate-based authentication to the upstream K8s cluster (mutually exclusive with token_auth)
+                type: dict
+                suboptions:
+                    certificate:
+                        description: Client certificate PEM for mTLS to upstream
+                        type: str
+                        required: true
+                    private_key:
+                        description: Private key PEM for mTLS to upstream
+                        type: str
+                        required: true
     roles:
         description:
             - List of role IDs or role names to assign to the target.
@@ -280,6 +324,39 @@ EXAMPLES = '''
       - "developers"
       - "database-admins"
     state: present
+
+- name: Create a Kubernetes target with token auth
+  plopoyop.warpgate.warpgate_target:
+    host: "https://warpgate.example.com"
+    token: "{{ warpgate_api_token }}"
+    name: "prod-cluster"
+    description: "Production Kubernetes cluster"
+    kubernetes_options:
+      cluster_url: "https://10.0.0.1:6443"
+      tls:
+        mode: "Required"
+        verify: true
+      token_auth:
+        token: "{{ k8s_service_account_token }}"
+    roles:
+      - "k8s-admins"
+    state: present
+
+- name: Create a Kubernetes target with certificate auth
+  plopoyop.warpgate.warpgate_target:
+    host: "https://warpgate.example.com"
+    token: "{{ warpgate_api_token }}"
+    name: "staging-cluster"
+    description: "Staging Kubernetes cluster"
+    kubernetes_options:
+      cluster_url: "https://10.0.1.1:6443"
+      tls:
+        mode: "Required"
+        verify: false
+      certificate_auth:
+        certificate: "{{ k8s_client_cert }}"
+        private_key: "{{ k8s_client_key }}"
+    state: present
 '''
 
 RETURN = '''
@@ -330,21 +407,23 @@ def build_target_options(module):
     http_options = module.params.get('http_options')
     mysql_options = module.params.get('mysql_options')
     postgres_options = module.params.get('postgres_options')
+    kubernetes_options = module.params.get('kubernetes_options')
 
     option_count = sum([
         1 if ssh_options else 0,
         1 if http_options else 0,
         1 if mysql_options else 0,
-        1 if postgres_options else 0
+        1 if postgres_options else 0,
+        1 if kubernetes_options else 0
     ])
 
     if option_count == 0:
         module.fail_json(
-            msg="One of ssh_options, http_options, mysql_options, or postgres_options must be specified"
+            msg="One of ssh_options, http_options, mysql_options, postgres_options, or kubernetes_options must be specified"
         )
     if option_count > 1:
         module.fail_json(
-            msg="Only one of ssh_options, http_options, mysql_options, or postgres_options can be specified"
+            msg="Only one of ssh_options, http_options, mysql_options, postgres_options, or kubernetes_options can be specified"
         )
 
     if ssh_options:
@@ -419,6 +498,32 @@ def build_target_options(module):
 
         if 'password' in postgres_options:
             options["password"] = postgres_options['password']
+
+        return options
+
+    elif kubernetes_options:
+        options = {
+            "kind": "Kubernetes",
+            "cluster_url": kubernetes_options['cluster_url'],
+            "tls": {
+                "mode": kubernetes_options['tls']['mode'],
+                "verify": kubernetes_options['tls']['verify']
+            }
+        }
+
+        if 'token_auth' in kubernetes_options and kubernetes_options['token_auth']:
+            options["auth"] = {
+                "kind": "Token",
+                "token": kubernetes_options['token_auth']['token']
+            }
+        elif 'certificate_auth' in kubernetes_options and kubernetes_options['certificate_auth']:
+            options["auth"] = {
+                "kind": "Certificate",
+                "certificate": kubernetes_options['certificate_auth']['certificate'],
+                "private_key": kubernetes_options['certificate_auth']['private_key']
+            }
+        else:
+            module.fail_json(msg="Kubernetes target requires either token_auth or certificate_auth")
 
         return options
 
@@ -558,6 +663,7 @@ def main():
         http_options=dict(type='dict', required=False),
         mysql_options=dict(type='dict', required=False),
         postgres_options=dict(type='dict', required=False),
+        kubernetes_options=dict(type='dict', required=False),
         roles=dict(type='list', elements='str', required=False),
         state=dict(type='str', choices=['present', 'absent'], default='present'),
         insecure=dict(type='bool', default=False),
