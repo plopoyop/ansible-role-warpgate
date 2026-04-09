@@ -1,9 +1,9 @@
 ---
-- name: Converge
+- name: Prepare
   hosts: all
+  gather_facts: false
   vars_files:
     - "../vars/install.yml"
-    - "../vars/configure.yml"
   tasks:
     - name: "Import role"
       ansible.builtin.import_role:
